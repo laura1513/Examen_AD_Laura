@@ -12,11 +12,39 @@ import java.util.List;
 
 public class SQLiteEmpleadoDAOImpl implements EmpleadoDAO{
     final String FINDALL = "SELECT * FROM empleados";
+    /*
+    SELECT *
+    FROM empleados
+    INNER JOIN direcciones
+    ON direcciones.empleado_id = empleados.id
+    */
     final String FINDBYID = "SELECT * FROM empleados WHERE id = ?";
-    final String SAVE = "INSERT INTO empleados (id, nombre, apellido, email, sueldo) VALUES (?, ?, ?, ?, ?)";
-    final String UPDATE = "UPDATE empleados SET nombre = ?, apellido = ?, email = ?, sueldo = ? WHERE id = ?";
+    /*
+    SELECT *
+    FROM empleados
+    INNER JOIN direcciones
+    ON empleados.id = direcciones.empleado_id
+    WHERE id = ?*/
+    final String SAVE = "INSERT INTO empleados (ombre, apellido, email, sueldo) VALUES (?, ?, ?, ?)";
+    /*
+    INSERT INTO empleados (id, nombre, apellido, email, sueldo, direccion)
+    VALUES (?, ?, ?, ?, ?, ?)*/
+    final String UPDATE = "UPDATE empleados SET nombre = ?, apellido = ?, email = ?, sueldo = ? WHERE nombre = ?";
+    /*
+    UPDATE empleados
+    INNER JOIN direcciones
+    ON empleados.id = direcciones.empleado_id
+    SET nombre = ?, apellido = ?, email = ?, sueldo = ?, direccion = ?
+    WHERE id = ?
+     */
     final String DELETE = "DELETE FROM empleados WHERE id = ?";
-    final String INCREMENT = "UPDATE empleados SET sueldo = (sueldo+sueldo*0.1) WHERE sueldo <  ?";
+    /*
+    DELETE FROM empleados
+    INNER JOIN direcciones
+    ON direcciones.empleado_id = empleados.id
+    WHERE id = ?
+     */
+    final String INCREMENT = "UPDATE empleados SET sueldo = (sueldo+sueldo*0.1) WHERE sueldo < ?";
     private Connection conexion = null;
 
     public SQLiteEmpleadoDAOImpl(Connection conexion) {
@@ -56,11 +84,10 @@ public class SQLiteEmpleadoDAOImpl implements EmpleadoDAO{
     @Override
     public void save(Empleado empleado) {
         try(PreparedStatement sentencia = conexion.prepareStatement(SAVE)){
-            sentencia.setInt(1, empleado.getId());
-            sentencia.setString(2, empleado.getNombre());
-            sentencia.setString(3, empleado.getApellido());
-            sentencia.setString(4, empleado.getEmail());
-            sentencia.setDouble(5, empleado.getSueldo());
+            sentencia.setString(1, empleado.getNombre());
+            sentencia.setString(2, empleado.getApellido());
+            sentencia.setString(3, empleado.getEmail());
+            sentencia.setDouble(4, empleado.getSueldo());
             sentencia.executeUpdate();
         } catch (Exception e) {
             e.getMessage();
@@ -71,7 +98,7 @@ public class SQLiteEmpleadoDAOImpl implements EmpleadoDAO{
     @Override
     public void update(Empleado empleado) {
         try(PreparedStatement sentencia = conexion.prepareStatement(UPDATE)){
-            sentencia.setInt(5, empleado.getId());
+            sentencia.setString(5, empleado.getNombre());
             sentencia.setString(1, empleado.getNombre());
             sentencia.setString(2, empleado.getApellido());
             sentencia.setString(3, empleado.getEmail());
@@ -95,7 +122,7 @@ public class SQLiteEmpleadoDAOImpl implements EmpleadoDAO{
     }
     public void increment(Empleado empleado) {
         try (PreparedStatement sentencia = conexion.prepareStatement(INCREMENT)) {
-            sentencia.setDouble(5, empleado.getSueldo());
+            sentencia.setDouble(1, empleado.getSueldo());
             sentencia.executeUpdate();
         } catch (Exception e) {
             e.getMessage();
@@ -103,7 +130,6 @@ public class SQLiteEmpleadoDAOImpl implements EmpleadoDAO{
     }
     private Empleado convertToEmpleado(ResultSet rs) throws SQLException {
         return new Empleado(
-                rs.getInt("id"),
                 rs.getString("nombre"),
                 rs.getString("apellido"),
                 rs.getString("email"),

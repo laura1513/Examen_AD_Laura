@@ -13,8 +13,8 @@ import java.util.List;
 public class SQLiteDepartamentoDAOImpl implements DepartamentoDAO{
     final String FINDALL = "SELECT * FROM departamentos";
     final String FINDBYID = "SELECT * FROM departamentos WHERE id = ?";
-    final String SAVE = "INSERT INTO departamentos (id, nombre) VALUES (?, ?)";
-    final String UPDATE = "UPDATE departamentos SET nombre = ? WHERE id = ?";
+    final String SAVE = "INSERT INTO departamentos (nombre) VALUES (?)";
+    final String UPDATE = "UPDATE departamentos SET nombre = ? WHERE nombre = ?";
     final String DELETE = "DELETE FROM departamentos WHERE id = ?";
     private Connection conexion = null;
 
@@ -55,8 +55,7 @@ public class SQLiteDepartamentoDAOImpl implements DepartamentoDAO{
     @Override
     public void save(Departamento departamento) {
         try(PreparedStatement sentencia = conexion.prepareStatement(SAVE)){
-            sentencia.setInt(1, departamento.getId());
-            sentencia.setString(2, departamento.getNombre());
+            sentencia.setString(1, departamento.getNombre());
             sentencia.executeUpdate();
         } catch (Exception e) {
             e.getMessage();
@@ -67,7 +66,7 @@ public class SQLiteDepartamentoDAOImpl implements DepartamentoDAO{
     @Override
     public void update(Departamento departamento) {
         try(PreparedStatement sentencia = conexion.prepareStatement(UPDATE)){
-            sentencia.setInt(2, departamento.getId());
+            sentencia.setString(2, departamento.getNombre());
             sentencia.setString(1, departamento.getNombre());
 
             sentencia.executeUpdate();
@@ -93,7 +92,6 @@ public class SQLiteDepartamentoDAOImpl implements DepartamentoDAO{
     }
     private Departamento convertToDepartamento(ResultSet rs) throws SQLException {
         return new Departamento(
-                rs.getInt("id"),
                 rs.getString("nombre"));
     }
 }

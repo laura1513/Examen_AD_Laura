@@ -4,8 +4,7 @@ public class Departamento {
     public int id;
     public String nombre;
 
-    public Departamento(int id, String nombre) {
-        this.id = id;
+    public Departamento(String nombre) {
         this.nombre = nombre;
     }
 
@@ -28,7 +27,7 @@ public class Departamento {
     @Override
     public String toString() {
         return "Departamento{"+
-                "id='"+id+'\''+
+                "id='"+this.id+'\''+
                 ", nombre='"+nombre+'}';
     }
 }

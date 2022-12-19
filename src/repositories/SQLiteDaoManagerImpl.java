@@ -15,6 +15,7 @@ public class SQLiteDaoManagerImpl implements DAOManager{
     private Connection conexion;
     private EmpleadoDAO empleados = null;
     private DepartamentoDAO departamentos = null;
+    private DireccionDAO direcciones = null;
 
     public SQLiteDaoManagerImpl() {
         try {
@@ -43,5 +44,11 @@ public class SQLiteDaoManagerImpl implements DAOManager{
             departamentos = new SQLiteDepartamentoDAOImpl(conexion);
         }
         return departamentos;
+    }
+    public DireccionDAO getDireccionDAO() {
+        if(direcciones == null) {
+            direcciones = new SQLiteDireccionDAOImpl(conexion);
+        }
+        return direcciones;
     }
 }

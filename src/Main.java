@@ -14,7 +14,7 @@ public class Main {
         System.out.println(empresa.getDepartamentoDAO().findById("1"));
 
         System.out.println("\nInsertar un departamento");
-        Departamento social = new Departamento(999, "Social");
+        Departamento social = new Departamento("Social");
         empresa.getDepartamentoDAO().save(social);
         empresa.getDepartamentoDAO().findAll().forEach(System.out::println);
 
@@ -27,14 +27,14 @@ public class Main {
         empresa.getDepartamentoDAO().deleteById("999");
         empresa.getDepartamentoDAO().findAll().forEach(System.out::println);
         //-------------------------------------------------------------------
-        /*System.out.println("\nMostrar todos");
+        System.out.println("\nMostrar todos");
         empresa.getEmpleadoDAO().findAll().forEach(System.out::println);
 
         System.out.println("\nMostrar solo uno");
-        System.out.println(empresa.getEmpleadoDAO().findById("1"));*/
+        System.out.println(empresa.getEmpleadoDAO().findById("1"));
 
         System.out.println("\nInsertar un empleado");
-        Empleado harry = new Empleado(999, "Harry", "Styles", "harrystyles@gmail.com", 89.99);
+        Empleado harry = new Empleado("Harry", "Styles", "harrystyles@gmail.com", 89.99);
         empresa.getEmpleadoDAO().save(harry);
         empresa.getEmpleadoDAO().findAll().forEach(System.out::println);
 

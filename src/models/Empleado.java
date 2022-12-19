@@ -7,8 +7,7 @@ public class Empleado {
     private String email;
     private double sueldo;
 
-    public Empleado(int id, String nombre, String apellido, String email, double sueldo) {
-        this.id = id;
+    public Empleado(String nombre, String apellido, String email, double sueldo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -32,7 +31,7 @@ public class Empleado {
     @Override
     public String toString() {
         return "Empleado {"+
-                "id='"+id+'\''+
+                "id='"+this.id+'\''+
                 ", nombre='"+nombre+'\''+
                 ", apellidos='"+apellido+'\''+
                 ", email='"+email+'\''+
