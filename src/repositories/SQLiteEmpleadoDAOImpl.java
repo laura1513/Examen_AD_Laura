@@ -25,7 +25,7 @@ public class SQLiteEmpleadoDAOImpl implements EmpleadoDAO{
     INNER JOIN direcciones
     ON empleados.id = direcciones.empleado_id
     WHERE id = ?*/
-    final String SAVE = "INSERT INTO empleados (ombre, apellido, email, sueldo) VALUES (?, ?, ?, ?)";
+    final String SAVE = "INSERT INTO empleados (nombre, apellido, email, sueldo) VALUES (?, ?, ?, ?)";
     /*
     INSERT INTO empleados (id, nombre, apellido, email, sueldo, direccion)
     VALUES (?, ?, ?, ?, ?, ?)*/

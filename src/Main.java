@@ -24,7 +24,7 @@ public class Main {
         empresa.getDepartamentoDAO().findAll().forEach(System.out::println);
 
         System.out.println("\nBorrar un departamento");
-        empresa.getDepartamentoDAO().deleteById("999");
+        empresa.getDepartamentoDAO().deleteById("Humanidades");
         empresa.getDepartamentoDAO().findAll().forEach(System.out::println);
         //-------------------------------------------------------------------
         System.out.println("\nMostrar todos");

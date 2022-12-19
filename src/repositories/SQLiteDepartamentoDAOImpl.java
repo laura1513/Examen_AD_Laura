@@ -15,7 +15,7 @@ public class SQLiteDepartamentoDAOImpl implements DepartamentoDAO{
     final String FINDBYID = "SELECT * FROM departamentos WHERE id = ?";
     final String SAVE = "INSERT INTO departamentos (nombre) VALUES (?)";
     final String UPDATE = "UPDATE departamentos SET nombre = ? WHERE nombre = ?";
-    final String DELETE = "DELETE FROM departamentos WHERE id = ?";
+    final String DELETE = "DELETE FROM departamentos WHERE nombre = ?";
     private Connection conexion = null;
 
     public SQLiteDepartamentoDAOImpl(Connection conexion) {
@@ -77,9 +77,9 @@ public class SQLiteDepartamentoDAOImpl implements DepartamentoDAO{
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(String nombre) {
         try (PreparedStatement sentencia = conexion.prepareStatement(DELETE)) {
-            sentencia.setString(1, id);
+            sentencia.setString(1, nombre);
             sentencia.executeUpdate();
         } catch ( Exception e ) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
